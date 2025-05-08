@@ -8,8 +8,6 @@ import java.util.List;
 public interface VehicleService {
     VehicleResponse getVehicleById(long id);
 
-    List<VehicleResponse> getAllVehicles();
-
     Long addVehicle(VehicleRequest vehicleRequest);
 
     Long updateVehicle(long id, VehicleRequest vehicleRequest);

@@ -8,11 +8,4 @@ import java.util.List;
 
 @Repository
 public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
-    List<Vehicle> findByBrandId(long id);
-
-    List<Vehicle> findByYearOfManufacture(int yearOfManufacture);
-
-    List<Vehicle> findByPriceBetween(long priceAfter, long priceBefore);
-
-    List<Vehicle> findByOwner(String owner);
 }

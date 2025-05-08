@@ -25,15 +25,6 @@ public class VehicleController {
         );
     }
 
-
-    @GetMapping("/all")
-    public ResponseEntity<List<VehicleResponse>> getAllVehicles(){
-        return new ResponseEntity<>(
-                vehicleService.getAllVehicles(),
-                HttpStatus.OK
-        );
-    }
-
     @PostMapping("/add")
     public ResponseEntity<Long> addVehicle(@RequestBody VehicleRequest vehicleRequest){
         return new ResponseEntity<>(
@@ -62,11 +53,12 @@ public class VehicleController {
     public ResponseEntity<List<VehicleResponse>> filterVehicles(
             @RequestParam(required = false) String brandName,
             @RequestParam(required = false) Integer year,
-            @RequestParam(required = false) Long min, Long max,
+            @RequestParam(required = false) Long minPrice,
+            @RequestParam(required = false) Long maxPrice,
             @RequestParam(required = false) String ownerName
     ){
         return new ResponseEntity<>(
-                vehicleService.filterVehicles(brandName, year, min, max, ownerName),
+                vehicleService.filterVehicles(brandName, year, minPrice, maxPrice, ownerName),
                 HttpStatus.OK
         );
     }

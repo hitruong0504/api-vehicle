@@ -1,5 +1,6 @@
 package com.hitruong.RestAPI.model;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,8 +13,11 @@ import java.time.Instant;
 @NoArgsConstructor
 @Builder
 public class VehicleRequest {
+    @NotBlank(message = "Name of car is required.")
     private String name;
+    @NotBlank(message = "Owner is required.")
     private String owner;
+    @NotBlank(message = "Brand name is required.")
     private String brandName;
 
     private Integer yearOfManufacture;
