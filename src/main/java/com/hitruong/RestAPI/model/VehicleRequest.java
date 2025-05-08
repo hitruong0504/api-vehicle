@@ -14,7 +14,8 @@ import java.time.Instant;
 public class VehicleRequest {
     private String name;
     private String owner;
-    private int yearOfManufacture;
-    private long price;
     private String brandName;
+
+    private Integer yearOfManufacture;
+    private Long price;
 }

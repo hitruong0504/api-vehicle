@@ -77,8 +77,13 @@ public class VehicleServiceImpl implements VehicleService{
 
         Vehicle vehicle = new Vehicle();
         vehicle.setName(vehicleRequest.getName());
-        vehicle.setYearOfManufacture(vehicleRequest.getYearOfManufacture());
-        vehicle.setPrice(vehicleRequest.getPrice());
+
+        if(vehicleRequest.getYearOfManufacture()!=null){
+            vehicle.setYearOfManufacture(vehicleRequest.getYearOfManufacture());
+        }
+        if(vehicleRequest.getPrice()!=null){
+            vehicle.setPrice(vehicleRequest.getPrice());
+        }
         vehicle.setOwner(vehicleRequest.getOwner());
         vehicle.setCreated(Instant.now());
         vehicle.setBrand(brand);
@@ -131,57 +136,7 @@ public class VehicleServiceImpl implements VehicleService{
         return vehicle.getId();
     }
 
-    @Override
-    public List<VehicleResponse> getVehiclesByBrand(String brandName) {
-        Brand brand
-                = brandRepository.findByName(brandName)
-                .orElseThrow(() -> new CustomException(
-                        "BRAND_NAME_NOT_FOUND",
-                        "Brand Name Not Found"
-                ));
 
-        List<Vehicle> vehicles = vehicleRepository.findByBrandId(brand.getId());
-        List<VehicleResponse> vehicleResponses
-                = vehicles.stream()
-                        .map(vehicle -> VehicleResponse.builder()
-                                .yearOfManufacture(vehicle.getYearOfManufacture())
-                                .price(vehicle.getPrice())
-                                .owner(vehicle.getOwner())
-                                .created(vehicle.getCreated())
-                                .name(vehicle.getName())
-                                .build()).toList();
-        return vehicleResponses;
-    }
-
-    @Override
-    public List<VehicleResponse> getVehiclesByYearOfManufacture(int year) {
-        List<Vehicle> vehicles = vehicleRepository.findByYearOfManufacture(year);
-        if (vehicles.isEmpty()) {
-            return new ArrayList<>();
-        }
-        List<VehicleResponse> vehicleResponses
-                = vehicles.stream()
-                .map(vehicle -> VehicleResponse.builder()
-                        .name(vehicle.getName())
-                        .yearOfManufacture(vehicle.getYearOfManufacture())
-                        .price(vehicle.getPrice())
-                        .owner(vehicle.getOwner())
-                        .created(vehicle.getCreated())
-                        .build()).toList();
-        return vehicleResponses;
-    }
-
-    @Override
-    public List<VehicleResponse> getVehiclesByPrice(long min, long max) {
-        List<Vehicle> vehicles = vehicleRepository.findByPriceBetween(min, max);
-        return getVehicleResponses(vehicles);
-    }
-
-    @Override
-    public List<VehicleResponse> getVehiclesByOwner(String name) {
-        List<Vehicle> vehicles = vehicleRepository.findByOwner(name);
-        return getVehicleResponses(vehicles);
-    }
 
     @Override
     public List<VehicleResponse> getFilterVehicles() {
@@ -202,6 +157,25 @@ public class VehicleServiceImpl implements VehicleService{
                         .owner(f.getOwner())
                         .build()).toList();
         return responses;
+    }
+
+    @Override
+    public List<VehicleResponse> filterVehicles(String brandName, Integer year, Long min, Long max, String ownerName) {
+        return vehicleRepository.findAll().stream()
+                .filter(vehicle -> brandName == null || vehicle.getBrand().getName().equalsIgnoreCase(brandName))
+                .filter(vehicle -> year == null || vehicle.getYearOfManufacture() == year)
+                .filter(vehicle -> min == null || vehicle.getPrice() >= min)
+                .filter(vehicle -> max == null || vehicle.getPrice() <= max)
+                .filter(vehicle -> ownerName == null || vehicle.getOwner().equals(ownerName))
+                .map(
+                        v -> VehicleResponse.builder()
+                                .owner(v.getOwner())
+                                .price(v.getPrice())
+                                .created(v.getCreated())
+                                .name(v.getName())
+                                .yearOfManufacture(v.getYearOfManufacture())
+                                .build()
+                ).collect(Collectors.toList());
     }
 
     private List<VehicleResponse> getVehicleResponses(List<Vehicle> vehicles) {

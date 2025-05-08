@@ -21,9 +21,9 @@ public class Vehicle {
 
     @Column(name = "NAME")
     private String name;
-    @Column(name = "YEAR_OF_MANUFACTURE")
+    @Column(name = "YEAR_OF_MANUFACTURE", nullable = true)
     private int yearOfManufacture;
-    @Column(name = "PRICE")
+    @Column(name = "PRICE", nullable = true)
     private long price;
     @Column(name = "OWNER")
     private String owner;

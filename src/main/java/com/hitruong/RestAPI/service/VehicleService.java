@@ -16,13 +16,7 @@ public interface VehicleService {
 
     Long deleteById(long id);
 
-    List<VehicleResponse> getVehiclesByBrand(String brandName);
-
-    List<VehicleResponse> getVehiclesByYearOfManufacture(int year);
-
-    List<VehicleResponse> getVehiclesByPrice(long min, long max);
-
-    List<VehicleResponse> getVehiclesByOwner(String owner);
-
     List<VehicleResponse> getFilterVehicles();
+
+    List<VehicleResponse> filterVehicles(String brandName, Integer year, Long min, Long max, String ownerName);
 }

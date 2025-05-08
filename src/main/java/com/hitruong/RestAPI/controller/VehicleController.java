@@ -1,6 +1,5 @@
 package com.hitruong.RestAPI.controller;
 
-import com.hitruong.RestAPI.entity.Brand;
 import com.hitruong.RestAPI.model.VehicleRequest;
 import com.hitruong.RestAPI.model.VehicleResponse;
 import com.hitruong.RestAPI.service.VehicleService;
@@ -27,7 +26,7 @@ public class VehicleController {
     }
 
 
-    @GetMapping()
+    @GetMapping("/alls")
     public ResponseEntity<List<VehicleResponse>> getAllVehicles(){
         return new ResponseEntity<>(
                 vehicleService.getAllVehicles(),
@@ -59,34 +58,15 @@ public class VehicleController {
         );
     }
 
-    @GetMapping("/brands")
-    public ResponseEntity<List<VehicleResponse>> getVehiclesByBrand(@RequestParam String brandName){
+    @GetMapping()
+    public ResponseEntity<List<VehicleResponse>> filterVehicles(
+            @RequestParam(required = false) String brandName,
+            @RequestParam(required = false) Integer year,
+            @RequestParam(required = false) Long min, Long max,
+            @RequestParam(required = false) String ownerName
+    ){
         return new ResponseEntity<>(
-                vehicleService.getVehiclesByBrand(brandName),
-                HttpStatus.OK
-        );
-    }
-
-    @GetMapping("/years")
-    public ResponseEntity<List<VehicleResponse>> getVehiclesByYear(@RequestParam int year){
-        return new ResponseEntity<>(
-                vehicleService.getVehiclesByYearOfManufacture(year),
-                HttpStatus.OK
-        );
-    }
-
-    @GetMapping("/prices")
-    public ResponseEntity<List<VehicleResponse>> getVehiclesByPriceRange(@RequestParam long min, long max){
-        return new ResponseEntity<>(
-                vehicleService.getVehiclesByPrice(min, max),
-                HttpStatus.OK
-        );
-    }
-
-    @GetMapping("/owner")
-    public ResponseEntity<List<VehicleResponse>> getVehiclesByOwner(@RequestParam String name){
-        return new ResponseEntity<>(
-                vehicleService.getVehiclesByOwner(name),
+                vehicleService.filterVehicles(brandName, year, min, max, ownerName),
                 HttpStatus.OK
         );
     }
