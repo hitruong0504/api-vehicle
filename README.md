@@ -7,9 +7,7 @@ A simple Spring Boot RESTful API for managing vehicles, their owners, and associ
 
 ## 📦 Base URL
 
-```
 /api/vehicles
-```
 
 ---
 
@@ -17,125 +15,114 @@ A simple Spring Boot RESTful API for managing vehicles, their owners, and associ
 
 ### 🔍 Get Vehicle by ID
 
-```
 GET /api/vehicles/{id}
-```
 
 - **Description**: Retrieve vehicle details by ID.
-- **Response**: `VehicleResponse`
-- **Status**: `200 OK`, or `404 Not Found` if not found.
+- **Response**: VehicleResponse
+- **Status**: 200 OK, or 404 Not Found if not found.
 
 ---
 
 ### 📋 Get All Vehicles
 
-```
-GET /api/vehicles
-```
+GET /api/vehicles/all
 
 - **Description**: Fetch a list of all vehicles.
-- **Response**: List of `VehicleResponse`
-- **Status**: `200 OK`
+- **Response**: List of VehicleResponse
+- **Status**: 200 OK
 
 ---
 
 ### ➕ Add a New Vehicle
 
-```
 POST /api/vehicles/add
-```
 
 - **Description**: Add a new vehicle. If the brand does not exist, it will be created automatically.
-- **Request Body**: `VehicleRequest`
+- **Request Body**: VehicleRequest
 - **Response**: ID of the newly created vehicle
-- **Status**: `201 Created`
+- **Status**: 201 Created
 
 ---
 
 ### ✏️ Update a Vehicle
 
-```
 PUT /api/vehicles/update/{id}
-```
 
 - **Description**: Update an existing vehicle.
-- **Request Body**: `VehicleRequest`
+- **Request Body**: VehicleRequest
 - **Response**: ID of the updated vehicle
-- **Status**: `200 OK`, or `404 Not Found` if not found.
+- **Status**: 200 OK, or 404 Not Found if not found.
 
 ---
 
 ### ❌ Delete a Vehicle
 
-```
 DELETE /api/vehicles/delete/{id}
-```
 
 - **Description**: Delete a vehicle by ID.
 - **Response**: ID of the deleted vehicle
-- **Status**: `200 OK`, or `404 Not Found` if not found.
+- **Status**: 200 OK, or 404 Not Found if not found.
 
 ---
 
 ### 🔎 Filter by Brand Name
 
-```
-GET /api/vehicles/brands?brandName={brandName}
-```
+GET /api/vehicles?brandName={brandName}
 
 - **Description**: Get vehicles by brand name.
-- **Response**: List of `VehicleResponse`
-- **Status**: `200 OK`
+- **Query Parameters**:
+  - `brandName`: The brand name to filter by.
+- **Response**: List of VehicleResponse
+- **Status**: 200 OK
 
 ---
 
 ### 📅 Filter by Year of Manufacture
 
-```
-GET /api/vehicles/years?year={year}
-```
+GET /api/vehicles?year={year}
 
 - **Description**: Get vehicles manufactured in a specific year.
-- **Response**: List of `VehicleResponse`
-- **Status**: `200 OK`
+- **Query Parameters**:
+  - `year`: The year of manufacture to filter by.
+- **Response**: List of VehicleResponse
+- **Status**: 200 OK
 
 ---
 
 ### 💰 Filter by Price Range
 
-```
-GET /api/vehicles/prices?min={min}&max={max}
-```
+GET /api/vehicles?min={min}&max={max}
 
 - **Description**: Get vehicles within a price range.
-- **Response**: List of `VehicleResponse`
-- **Status**: `200 OK`
+- **Query Parameters**:
+  - `min`: The minimum price.
+  - `max`: The maximum price.
+- **Response**: List of VehicleResponse
+- **Status**: 200 OK
 
 ---
 
 ### 👤 Filter by Owner
 
-```
-GET /api/vehicles/owner?name={ownerName}
-```
+GET /api/vehicles?ownerName={ownerName}
 
 - **Description**: Get vehicles by owner name (case-insensitive).
-- **Response**: List of `VehicleResponse`
-- **Status**: `200 OK`
+- **Query Parameters**:
+  - `ownerName`: The name of the vehicle owner to filter by.
+- **Response**: List of VehicleResponse
+- **Status**: 200 OK
 
 ---
 
 ### 🎯 Special Filter
 
-```
 GET /api/vehicles/filtered
-```
 
 - **Description**: Custom filter logic:
   - Return vehicles with price > 10,000,000 **AND** brand name starting with "S"
   - OR vehicles with price <= 10,000,000 **AND** brand type is "BUS"
-- **Response**: List of `VehicleResponse`
-- **Status**: `200 OK`
+- **Response**: List of VehicleResponse
+- **Status**: 200 OK
 
 ---
 
@@ -187,8 +174,8 @@ GET /api/vehicles/filtered
 ## 📌 Notes
 
 - Brand is automatically created if it does not exist when adding or updating a vehicle.
-- All filters return `200 OK` with an empty list if no data matches.
-- `created` timestamp is auto-generated.
+- All filters return 200 OK with an empty list if no data matches.
+- Created timestamp is auto-generated.
 
 ---
 
