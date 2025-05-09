@@ -1,8 +1,6 @@
 package com.hitruong.RestAPI.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,9 +22,9 @@ public class Vehicle {
     @Column(name = "NAME")
     private String name;
     @Column(name = "YEAR_OF_MANUFACTURE", nullable = true)
-    private int yearOfManufacture;
+    private Integer yearOfManufacture;
     @Column(name = "PRICE", nullable = true)
-    private long price;
+    private Long price;
     @Column(name = "OWNER")
     private String owner;
     @Column(name = "CREATED")

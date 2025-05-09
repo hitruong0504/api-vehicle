@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.Instant;
 
 @Data
 @AllArgsConstructor
@@ -19,7 +18,6 @@ public class VehicleRequest {
     private String owner;
     @NotBlank(message = "Brand name is required.")
     private String brandName;
-
     private Integer yearOfManufacture;
     private Long price;
 }

@@ -1,12 +1,7 @@
 package com.hitruong.RestAPI.entity;
 
-
-import com.hitruong.RestAPI.model.BrandType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Data
@@ -20,7 +15,7 @@ public class Brand {
     @Column(name = "ID")
     private long Id;
 
-    @Column(name = "BRAND_NAME")
+    @Column(name = "BRAND_NAME", nullable = false)
     private String name;
     @Column(name = "TYPE")
     private String type;
