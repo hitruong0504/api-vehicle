@@ -4,17 +4,20 @@ import com.hitruong.RestAPI.entity.Brand;
 import com.hitruong.RestAPI.entity.Vehicle;
 import com.hitruong.RestAPI.exception.CustomException;
 import com.hitruong.RestAPI.mapper.VehicleMapper;
+import com.hitruong.RestAPI.model.VehicleFilterRequest;
 import com.hitruong.RestAPI.model.VehicleRequest;
 import com.hitruong.RestAPI.model.VehicleResponse;
 import com.hitruong.RestAPI.repository.BrandRepository;
 import com.hitruong.RestAPI.repository.VehicleRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Log4j2
@@ -108,32 +111,39 @@ public class VehicleServiceImpl implements VehicleService{
         return vehicle.getId();
     }
 
-
-
     @Override
-    public List<VehicleResponse> getFilterVehicles() {
-        List<Vehicle> vehicles = vehicleRepository.findAll();
-        List<Vehicle> filtered = vehicles.stream()
-                .filter(v ->
-                        (v.getPrice() > 10_000_000 && v.getBrand().getName().startsWith("S")) ||
-                                (v.getPrice() <= 10_000_000 && "BUS".equalsIgnoreCase(v.getBrand().getType()))
-                ).toList();
-
-        return filtered.stream()
-                .map(vehicleMapper::toResponse)
-                .toList();
+    public Page<VehicleResponse> getFilterVehicles(int page, int size) {
+        Page<Vehicle> vehicles = vehicleRepository.getFilteredVehicles(PageRequest.of(page, size));
+        return vehicles.map(vehicleMapper::toResponse);
     }
 
+
+//    @Override
+//    public List<VehicleResponse> getFilterVehicles() {
+//        List<Vehicle> vehicles = vehicleRepository.findAll();
+//        List<Vehicle> filtered = vehicles.stream()
+//                .filter(v ->
+//                        (v.getPrice() > 10_000_000 && v.getBrand().getName().startsWith("S")) ||
+//                                (v.getPrice() <= 10_000_000 && "BUS".equalsIgnoreCase(v.getBrand().getType()))
+//                ).toList();
+//
+//        return filtered.stream()
+//                .map(vehicleMapper::toResponse)
+//                .toList();
+//    }
+
     @Override
-    public List<VehicleResponse> filterVehicles(String brandName, Integer year, Long minPrice, Long maxPrice, String ownerName) {
-        return vehicleRepository.findAll().stream()
-                .filter(vehicle -> brandName == null || vehicle.getBrand().getName().equalsIgnoreCase(brandName))
-                .filter(vehicle -> year == null || vehicle.getYearOfManufacture() == year)
-                .filter(vehicle -> minPrice == null || vehicle.getPrice() >= minPrice)
-                .filter(vehicle -> maxPrice == null || vehicle.getPrice() <= maxPrice)
-                .filter(vehicle -> ownerName == null || vehicle.getOwner().equals(ownerName))
-                .map(vehicleMapper::toResponse)
-                .collect(Collectors.toList());
+    public Page<VehicleResponse> filterVehicles(VehicleFilterRequest vehicleFilterRequest, int page, int size) {
+        Page<Vehicle> vehicles = vehicleRepository.filterVehicles(
+                vehicleFilterRequest.getBrandName(),
+                vehicleFilterRequest.getYear(),
+                vehicleFilterRequest.getMinPrice(),
+                vehicleFilterRequest.getMaxPrice(),
+                vehicleFilterRequest.getOwnerName(),
+                PageRequest.of(page, size)
+        );
+        return vehicles.map(vehicleMapper::toResponse);
     }
+
 
 }

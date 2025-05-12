@@ -1,9 +1,11 @@
 package com.hitruong.RestAPI.controller;
 
+import com.hitruong.RestAPI.model.VehicleFilterRequest;
 import com.hitruong.RestAPI.model.VehicleRequest;
 import com.hitruong.RestAPI.model.VehicleResponse;
 import com.hitruong.RestAPI.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -50,25 +52,20 @@ public class VehicleController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<VehicleResponse>> filterVehicles(
-            @RequestParam(required = false) String brandName,
-            @RequestParam(required = false) Integer year,
-            @RequestParam(required = false) Long minPrice,
-            @RequestParam(required = false) Long maxPrice,
-            @RequestParam(required = false) String ownerName
+    public ResponseEntity<Page<VehicleResponse>> filterVehicles(
+            @ModelAttribute VehicleFilterRequest vehicleFilterRequest,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size
     ){
-        return new ResponseEntity<>(
-                vehicleService.filterVehicles(brandName, year, minPrice, maxPrice, ownerName),
-                HttpStatus.OK
-        );
+        return ResponseEntity.ok(vehicleService.filterVehicles(vehicleFilterRequest, page, size));
     }
 
     @GetMapping("/filtered")
-    public ResponseEntity<List<VehicleResponse>> filteredVehicles(){
-        return new ResponseEntity<>(
-                vehicleService.getFilterVehicles(),
-                HttpStatus.OK
-        );
+    public ResponseEntity<Page<VehicleResponse>> filteredVehicles(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size
+    ){
+        return ResponseEntity.ok(vehicleService.getFilterVehicles(page, size));
     }
 
 }

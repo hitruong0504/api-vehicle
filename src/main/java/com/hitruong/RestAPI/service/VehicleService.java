@@ -1,7 +1,9 @@
 package com.hitruong.RestAPI.service;
 
+import com.hitruong.RestAPI.model.VehicleFilterRequest;
 import com.hitruong.RestAPI.model.VehicleRequest;
 import com.hitruong.RestAPI.model.VehicleResponse;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -14,7 +16,7 @@ public interface VehicleService {
 
     Long deleteById(long id);
 
-    List<VehicleResponse> getFilterVehicles();
+    Page<VehicleResponse> getFilterVehicles(int page, int size);
 
-    List<VehicleResponse> filterVehicles(String brandName, Integer year, Long min, Long max, String ownerName);
+    Page<VehicleResponse> filterVehicles(VehicleFilterRequest vehicleFilterRequest, int page, int size);
 }
