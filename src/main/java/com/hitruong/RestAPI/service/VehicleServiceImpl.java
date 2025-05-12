@@ -12,7 +12,7 @@ import com.hitruong.RestAPI.repository.VehicleRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -60,7 +60,6 @@ public class VehicleServiceImpl implements VehicleService{
 
         Vehicle vehicle = vehicleMapper.toEntity(vehicleRequest);
         vehicle.setBrand(brand);
-        vehicle.setBrandNameSnapshot(brand.getName());
         vehicleRepository.save(vehicle);
         log.info("Vehicle added {}", vehicle);
         return vehicle.getId();
@@ -90,7 +89,6 @@ public class VehicleServiceImpl implements VehicleService{
 
         vehicleMapper.updateEntityFromRequest(vehicleRequest, vehicle);
         vehicle.setBrand(brand);
-        vehicle.setBrandNameSnapshot(brand.getName());
         vehicleRepository.save(vehicle);
         log.info("Vehicle updated {}", vehicle);
         return vehicle.getId();
@@ -112,21 +110,14 @@ public class VehicleServiceImpl implements VehicleService{
     }
 
     @Override
-    public Page<VehicleResponse> getFilterVehicles(int page, int size) {
-        Page<Vehicle> vehicles = vehicleRepository.getFilteredVehicles(PageRequest.of(page, size));
+    public Page<VehicleResponse> getFilterVehicles(Pageable pageable) {
+        Page<Vehicle> vehicles = vehicleRepository.getFilteredVehicles(pageable);
         return vehicles.map(vehicleMapper::toResponse);
     }
 
     @Override
-    public Page<VehicleResponse> filterVehicles(VehicleFilterRequest vehicleFilterRequest, int page, int size) {
-        Page<Vehicle> vehicles = vehicleRepository.filterVehicles(
-                vehicleFilterRequest.getBrandName(),
-                vehicleFilterRequest.getYear(),
-                vehicleFilterRequest.getMinPrice(),
-                vehicleFilterRequest.getMaxPrice(),
-                vehicleFilterRequest.getOwnerName(),
-                PageRequest.of(page, size)
-        );
+    public Page<VehicleResponse> filterVehicles(VehicleFilterRequest vehicleFilterRequest, Pageable pageable) {
+        Page<Vehicle> vehicles = vehicleRepository.filterVehicles(vehicleFilterRequest, pageable);
         return vehicles.map(vehicleMapper::toResponse);
     }
 

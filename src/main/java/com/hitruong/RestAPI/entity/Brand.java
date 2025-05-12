@@ -19,4 +19,7 @@ public class Brand {
     private String name;
     @Column(name = "TYPE")
     private String type;
+
+    @Column(name = "IS_DELETED")
+    private boolean isDeleted = false;
 }

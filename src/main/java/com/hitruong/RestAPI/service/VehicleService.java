@@ -4,8 +4,8 @@ import com.hitruong.RestAPI.model.VehicleFilterRequest;
 import com.hitruong.RestAPI.model.VehicleRequest;
 import com.hitruong.RestAPI.model.VehicleResponse;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 
 public interface VehicleService {
     VehicleResponse getVehicleById(long id);
@@ -16,7 +16,7 @@ public interface VehicleService {
 
     Long deleteById(long id);
 
-    Page<VehicleResponse> getFilterVehicles(int page, int size);
+    Page<VehicleResponse> getFilterVehicles(Pageable pageable);
 
-    Page<VehicleResponse> filterVehicles(VehicleFilterRequest vehicleFilterRequest, int page, int size);
+    Page<VehicleResponse> filterVehicles(VehicleFilterRequest vehicleFilterRequest, Pageable pageable);
 }

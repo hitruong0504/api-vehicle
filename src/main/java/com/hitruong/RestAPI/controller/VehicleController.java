@@ -6,6 +6,7 @@ import com.hitruong.RestAPI.model.VehicleResponse;
 import com.hitruong.RestAPI.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -53,18 +54,14 @@ public class VehicleController {
     @GetMapping()
     public ResponseEntity<Page<VehicleResponse>> filterVehicles(
             @ModelAttribute VehicleFilterRequest vehicleFilterRequest,
-            @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "10") int size
+            Pageable pageable
     ){
-        return ResponseEntity.ok(vehicleService.filterVehicles(vehicleFilterRequest, page, size));
+        return ResponseEntity.ok(vehicleService.filterVehicles(vehicleFilterRequest, pageable));
     }
 
     @GetMapping("/filtered")
-    public ResponseEntity<Page<VehicleResponse>> filteredVehicles(
-            @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "10") int size
-    ){
-        return ResponseEntity.ok(vehicleService.getFilterVehicles(page, size));
+    public ResponseEntity<Page<VehicleResponse>> filteredVehicles(Pageable pageable){
+        return ResponseEntity.ok(vehicleService.getFilterVehicles(pageable));
     }
 
 }
