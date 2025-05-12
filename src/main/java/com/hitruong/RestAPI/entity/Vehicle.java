@@ -30,7 +30,10 @@ public class Vehicle {
     @Column(name = "CREATED")
     private Instant created;
 
+    @Column(name = "BRAND_NAME_SNAPSHOT")
+    private String brandNameSnapshot;
+
     @ManyToOne
-    @JoinColumn(name = "BRAND_ID")
+    @JoinColumn(name = "BRAND_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Brand brand;
 }

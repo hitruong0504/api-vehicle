@@ -18,6 +18,7 @@ public class VehicleRequest {
     private String owner;
     @NotBlank(message = "Brand name is required.")
     private String brandName;
+
     private Integer yearOfManufacture;
     private Long price;
 }

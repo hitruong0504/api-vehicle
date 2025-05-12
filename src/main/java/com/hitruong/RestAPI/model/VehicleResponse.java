@@ -18,4 +18,5 @@ public class VehicleResponse {
     private long price;
     private String owner;
     private Instant created;
+    private String brandName;
 }

@@ -13,10 +13,8 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -62,6 +60,7 @@ public class VehicleServiceImpl implements VehicleService{
 
         Vehicle vehicle = vehicleMapper.toEntity(vehicleRequest);
         vehicle.setBrand(brand);
+        vehicle.setBrandNameSnapshot(brand.getName());
         vehicleRepository.save(vehicle);
         log.info("Vehicle added {}", vehicle);
         return vehicle.getId();
@@ -91,6 +90,7 @@ public class VehicleServiceImpl implements VehicleService{
 
         vehicleMapper.updateEntityFromRequest(vehicleRequest, vehicle);
         vehicle.setBrand(brand);
+        vehicle.setBrandNameSnapshot(brand.getName());
         vehicleRepository.save(vehicle);
         log.info("Vehicle updated {}", vehicle);
         return vehicle.getId();
@@ -116,21 +116,6 @@ public class VehicleServiceImpl implements VehicleService{
         Page<Vehicle> vehicles = vehicleRepository.getFilteredVehicles(PageRequest.of(page, size));
         return vehicles.map(vehicleMapper::toResponse);
     }
-
-
-//    @Override
-//    public List<VehicleResponse> getFilterVehicles() {
-//        List<Vehicle> vehicles = vehicleRepository.findAll();
-//        List<Vehicle> filtered = vehicles.stream()
-//                .filter(v ->
-//                        (v.getPrice() > 10_000_000 && v.getBrand().getName().startsWith("S")) ||
-//                                (v.getPrice() <= 10_000_000 && "BUS".equalsIgnoreCase(v.getBrand().getType()))
-//                ).toList();
-//
-//        return filtered.stream()
-//                .map(vehicleMapper::toResponse)
-//                .toList();
-//    }
 
     @Override
     public Page<VehicleResponse> filterVehicles(VehicleFilterRequest vehicleFilterRequest, int page, int size) {

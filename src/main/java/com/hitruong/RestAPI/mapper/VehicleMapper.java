@@ -16,6 +16,7 @@ public interface VehicleMapper {
     @Mapping(target = "brand", ignore = true)
     Vehicle toEntity(VehicleRequest vehicleRequest);
 
+    @Mapping(target = "brandName", source = "brandNameSnapshot")
     VehicleResponse toResponse(Vehicle vehicle);
 
     @Mapping(target = "id", ignore = true)
