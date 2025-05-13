@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD Report Design//EN"
+        "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports
+              http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="vehicleReport"
+              pageWidth="595"
+              pageHeight="842"
+              columnWidth="555"
+              leftMargin="20"
+              rightMargin="20"
+              topMargin="20"
+              bottomMargin="20">
+
+    <field name="name" class="java.lang.String"/>
+    <field name="yearOfManufacture" class="java.lang.Integer"/>
+    <field name="price" class="java.lang.Long"/>
+    <field name="owner" class="java.lang.String"/>
+    <field name="created" class="java.time.Instant"/>
+    <field name="brandName" class="java.lang.String"/>
+
+    <title>
+        <band height="50">
+            <staticText>
+                <reportElement x="0" y="10" width="555" height="30" uuid="f0c6f5c7-6b3d-4f33-b98e-1b4ed740dbb4"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="18" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Vehicle List]]></text>
+            </staticText>
+        </band>
+    </title>
+
+    <columnHeader>
+        <band height="20">
+            <textField>
+                <reportElement x="0" y="0" width="90" height="20" uuid="2d9c6f34-7e56-4a4f-9512-1d3c45771277"/>
+                <textElement textAlignment="Justified"/>
+                <textFieldExpression><![CDATA["Name"]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="90" y="0" width="90" height="20" uuid="a82c94f6-e084-4eae-b49f-b75fc4e870a2"/>
+                <textElement textAlignment="Justified"/>
+                <textFieldExpression><![CDATA["Year"]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="180" y="0" width="90" height="20" uuid="66c63392-442a-4d45-bc30-765021ec19be"/>
+                <textElement textAlignment="Justified"/>
+                <textFieldExpression><![CDATA["Price"]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="270" y="0" width="90" height="20" uuid="0b60484a-3e59-4144-94b4-9ed7a3a0dcf6"/>
+                <textElement textAlignment="Justified"/>
+                <textFieldExpression><![CDATA["Owner"]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="360" y="0" width="100" height="20" uuid="927b4cbb-9ae3-4a19-b18d-9edb71f05e30"/>
+                <textElement textAlignment="Justified"/>
+                <textFieldExpression><![CDATA["Created"]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="460" y="0" width="95" height="20" uuid="17c21c4b-e2f3-4b8f-bfa0-cf989e5071e9"/>
+                <textElement textAlignment="Justified"/>
+                <textFieldExpression><![CDATA["Brand"]]></textFieldExpression>
+            </textField>
+        </band>
+    </columnHeader>
+
+    <detail>
+        <band height="30">
+            <textField>
+                <reportElement x="0" y="0" width="90" height="20" uuid="ad8497ff-0322-45be-8091-4b7fcb91fd2d"/>
+                <textElement textAlignment="Justified"/>
+                <textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="90" y="0" width="90" height="20" uuid="fa4f0eeb-29b3-4cf9-8dc2-4534e71c84b6"/>
+                <textElement textAlignment="Justified"/>
+                <textFieldExpression><![CDATA[$F{yearOfManufacture}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="180" y="0" width="90" height="20" uuid="4e4d51c2-b58c-4c68-9249-c7d7f780e9a9"/>
+                <textElement textAlignment="Justified"/>
+                <textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="270" y="0" width="90" height="20" uuid="ba0f14f7-4f2b-4a2b-9622-64048b1cbb77"/>
+                <textElement textAlignment="Justified"/>
+                <textFieldExpression><![CDATA[$F{owner}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="360" y="0" width="100" height="20" uuid="164f9a9d-abc4-4dc0-b364-5bb80bc9ccfb"/>
+                <textElement textAlignment="Justified"/>
+                <textFieldExpression><![CDATA[$F{created}.toString()]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="460" y="0" width="95" height="20" uuid="3c99956e-2e03-44e9-b8c3-5c49a334527e"/>
+                <textElement textAlignment="Justified"/>
+                <textFieldExpression><![CDATA[$F{brandName}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+
+</jasperReport>
